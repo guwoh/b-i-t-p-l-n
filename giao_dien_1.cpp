@@ -10,6 +10,7 @@
  */
 
 #include<stdio.h> // use for printf
+#include<string.h> // use for string
 #include<stdlib.h> // use for malloc in C
 
 // khai bao struct 
@@ -204,3 +205,4 @@ void if_bn(bn*infor_bn,vc*infor_vc) // chi thuc hien hien thi
 
 
 //  điều kiện nếu bệnh nhân, bác sĩ, vaccin có đầu vào không thỏa mãn
+//
