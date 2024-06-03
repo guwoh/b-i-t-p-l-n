@@ -206,3 +206,5 @@ void if_bn(bn*infor_bn,vc*infor_vc) // chi thuc hien hien thi
 
 //  điều kiện nếu bệnh nhân, bác sĩ, vaccin có đầu vào không thỏa mãn
 //
+
+//3
