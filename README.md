@@ -1,2 +1,2 @@
-# b-i-t-p-l-n
+# bài tập lớn
 main_display
