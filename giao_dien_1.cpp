@@ -9,9 +9,9 @@
  * 
  */
 
-#include<stdio.h> // use for printf
-#include<string.h> // use for string
-#include<stdlib.h> // use for malloc in C
+#include <stdio.h> // use for printf
+#include <string.h> // use for string
+#include <stdlib.h> // use for malloc in C
 
 // khai bao struct 
 typedef struct  // for nhan vien
@@ -21,7 +21,8 @@ typedef struct  // for nhan vien
     int monthofnv;
     int yearofnv;
     int codeofnv;
-}nv;
+} nv;
+
 typedef struct // for vaccin
 {
     char nameofvc[100];
@@ -29,7 +30,8 @@ typedef struct // for vaccin
     int monthofvc;
     int yearofvc;
     int codeofvc;
-}vc;
+} vc;
+
 typedef struct  // for benh nhan
 {
     char nameofbn[100];
@@ -37,16 +39,15 @@ typedef struct  // for benh nhan
     int monthofbn;
     int yearofbn;
     int codeofbn;
-}bn;
-
+} bn;
 
 // khai bao cac ham su dung 
-void display_first(int*,int*,int*);  // hien thi giao dien ban dau, nhap so nhan vien, benh nhan, vaccin
-void display_enter(int,int,int,nv*,vc*,bn*);  // hien thi nhap thong tin
-void display_mid(int*,nv*,bn*,vc*);// hien thi giao dien giai doan 2, lua chon giua nhan vien va benh nhan
-void if_nv(nv*,bn*,vc*);
-void if_bn(bn*,vc*);
-
+void display_first(int*, int*, int*);  // hien thi giao dien ban dau, nhap so nhan vien, benh nhan, vaccin
+void display_enter(int, int, int, nv*, vc*, bn*);  // hien thi nhap thong tin
+void display_mid(int*, nv*, bn*, vc*); // hien thi giao dien giai doan 2, lua chon giua nhan vien va benh nhan
+void display_check(int, int, int, nv*, bn*, vc*);
+void if_nv(nv*, bn*, vc*);
+void if_bn(bn*, vc*);
 
 int main()
 {
@@ -59,7 +60,8 @@ int main()
     int numofvc;  // so luong vaccin
 
     display_first(&numofnv, &numofbn, &numofvc); // chuyen dia chi so luong
-    printf("\n Hien thi: %d-%d-%d\n",numofnv,numofbn,numofvc);
+    printf("\n Hien thi: %d-%d-%d\n", numofnv, numofbn, numofvc);
+
     // cap phat dong cho doi tuong
     infor_nv = (nv*)malloc(numofnv * sizeof(nv));
     infor_vc = (vc*)malloc(numofvc * sizeof(vc));
@@ -67,144 +69,168 @@ int main()
 
     // nhap thong tin cho bo nho cap phat dong
     display_enter(numofnv, numofvc, numofbn, infor_nv, infor_vc, infor_bn);
+
     // hien thi tuy chon tiep theo
+    display_check(numofnv, numofvc, numofbn, infor_nv, infor_bn, infor_vc); // hien thi thong tin to check
+
     printf(" *********************************\n");
     printf(" ___HE THONG THONG TIN TIEM CHUNG___\n\n");
     display_mid(&a, infor_nv, infor_bn, infor_vc);
+
     // check for a value
-    printf( " Hien thi a:%d ",a);
-    switch(a)
+    printf(" Hien thi a: %d ", a);
+    switch (a)
     {
         case 1: // truong hop danh cho nhan vien
-            if_nv(infor_nv,infor_bn,infor_vc);
+            if_nv(infor_nv, infor_bn, infor_vc);
             break;
         case 2: // truong hop cho benh nhan
-            if_bn(infor_bn,infor_vc);
+            if_bn(infor_bn, infor_vc);
             break;
-        defautl: break;
+        default: 
+            break;
     }
-
-
-
-
-
 
     // Free allocated memory
     free(infor_bn);
     free(infor_nv);
     free(infor_vc);
-    
-    return 0;
 
+    return 0;
 }
 
 void display_first(int *numofnv, int *numofbn, int *numofvc)
 {
-    int a,b,c;
+    int a, b, c;
     printf(" Nhap so luong (nhan vien)-(benh nhan)-(vaccin): ");
-    scanf("%d-%d-%d",&a,&b,&c);
-    *numofnv=a; *numofbn=b; *numofvc=c;
+    scanf("%d-%d-%d", &a, &b, &c);
+    *numofnv = a; 
+    *numofbn = b; 
+    *numofvc = c;
 }
 
-void display_enter(int n_v,int v_c,int b_n ,nv* in_nv,vc* in_vc,bn* in_bn)
+void display_enter(int n_v, int v_c, int b_n, nv* in_nv, vc* in_vc, bn* in_bn)
 {
-    // printf("%d_%d_%d",n_v,v_c,b_n);
-    for(int i=0; i<n_v; i++)  // for loop nhap thong tin nhan vien
+    for (int i = 0; i < n_v; i++)  // for loop nhap thong tin nhan vien
     {
         printf(" Nhap ten cua nhan vien:");
         getchar();  // Doc ky tu newline con lai tu lan nhap truoc
-        fgets(in_nv[i].nameofnv,99,stdin);
+        fgets(in_nv[i].nameofnv, 99, stdin);
         printf("**\n");
         printf(" Nhap Nam-Thang-Ngay:");
-        scanf("%4d-%2d-%d",&in_nv[i].yearofnv,&in_nv[i].monthofnv,&in_nv[i].dayofnv);
+        scanf("%4d-%2d-%2d", &in_nv[i].yearofnv, &in_nv[i].monthofnv, &in_nv[i].dayofnv);
         printf("**\n");
         printf(" Ma code cua nhan vien nay la: ");
-        scanf("%d",&in_nv[i].codeofnv);
+        scanf("%d", &in_nv[i].codeofnv);
     }
 
-    for(int i=0; i<v_c; i++)  // for loop nhap thong tin vaccin
+    for (int i = 0; i < v_c; i++)  // for loop nhap thong tin vaccin
     {
         printf(" Nhap ten cua vaccin:");
         getchar();  // Doc ky tu newline con lai tu lan nhap truoc
-        fgets(in_vc[i].nameofvc,99,stdin);
+        fgets(in_vc[i].nameofvc, 99, stdin);
         printf("**\n");
         printf(" Nhap Nam-Thang-Ngay:");
-        scanf("%4d-%2d-%d",&in_vc[i].yearofvc,&in_vc[i].monthofvc,&in_vc[i].dayofvc);
+        scanf("%4d-%2d-%2d", &in_vc[i].yearofvc, &in_vc[i].monthofvc, &in_vc[i].dayofvc);
         printf("**\n");
         printf(" Ma code cua vaccin nay la: ");
-        scanf("%d",&in_vc[i].codeofvc);
+        scanf("%d", &in_vc[i].codeofvc);
     }
 
-    for(int i=0; i<b_n; i++)  // for loop nhap thong tin benh nhan
+    for (int i = 0; i < b_n; i++)  // for loop nhap thong tin benh nhan
     {
         printf(" Nhap ten cua benh nhan:");
         getchar();  // Doc ky tu newline con lai tu lan nhap truoc
-        fgets(in_bn[i].nameofbn,99,stdin);
+        fgets(in_bn[i].nameofbn, 99, stdin);
         printf("**\n");
         printf(" Nhap Nam-Thang-Ngay:");
-        scanf("%4d-%2d-%d",&in_bn[i].yearofbn,&in_bn[i].monthofbn,&in_bn[i].dayofbn);
+        scanf("%4d-%2d-%2d", &in_bn[i].yearofbn, &in_bn[i].monthofbn, &in_bn[i].dayofbn);
         printf("**\n");
         printf(" Ma code cua benh nhan nay la: ");
-        scanf("%d",&in_bn[i].codeofbn);
+        scanf("%d", &in_bn[i].codeofbn);
     }
 }
 
-void display_mid(int *a,nv*innv, bn*inbn, vc*invc)
+void display_check(int n_v, int v_c, int b_n, nv* in_nv, bn* in_bn, vc* in_vc)
+{
+    printf(" Hien thi thong tin ban muon kiem tra:\n Nhan vien (1)\n Benh nhan (2)\n Vaccine (3)\n");
+    
+    for (int i = 0; i < n_v; i++)  // for loop hien thi thong tin nhan vien
+    {
+        printf(" Ten cua nhan vien %d: %s", i + 1, in_nv[i].nameofnv);
+        printf("**\n");
+        printf(" Nam-Thang-Ngay: %d-%d-%d\n", in_nv[i].yearofnv, in_nv[i].monthofnv, in_nv[i].dayofnv);
+        printf("**\n");
+        printf(" Ma code: %d\n", in_nv[i].codeofnv);
+    }
+    for (int i = 0; i < v_c; i++)  // for loop hien thi thong tin vaccin
+    {
+        printf(" Ten cua vaccin %d: %s", i + 1, in_vc[i].nameofvc);
+        printf("**\n");
+        printf(" Nam-Thang-Ngay: %d-%d-%d\n", in_vc[i].yearofvc, in_vc[i].monthofvc, in_vc[i].dayofvc);
+        printf("**\n");
+        printf(" Ma code: %d\n", in_vc[i].codeofvc);
+    }
+    for (int i = 0; i < b_n; i++)  // for loop hien thi thong tin benh nhan
+    {
+        printf(" Ten cua benh nhan %d: %s", i + 1, in_bn[i].nameofbn);
+        printf("**\n");
+        printf(" Nam-Thang-Ngay: %d-%d-%d\n", in_bn[i].yearofbn, in_bn[i].monthofbn, in_bn[i].dayofbn);
+        printf("**\n");
+        printf(" Ma code: %d\n", in_bn[i].codeofbn);
+    }
+    
+}
+
+void display_mid(int *a, nv* in_nv, bn* in_bn, vc* in_vc)
 {
     int gan;
     do
     {
         printf(" Ban la: nhan vien(1) benh nhan(2):");
-        scanf("%d",&gan);
-        switch(gan) 
+        scanf("%d", &gan);
+        switch (gan) 
         {
-            case 1 : 
+            case 1: 
                 printf(" Duoi day la cac tien ich cho nhan vien!\n");
                 break;
-            case 2 :
+            case 2:
                 printf(" Duoi day la cac tien ich cho benh nhan!\n");
                 break;
             default: 
                 printf(" Thong tin ban nhap khong hop le, vui long nhap lai!\n");
-                gan=3;
+                gan = 3;
                 break;
         }
-    /* code */
-    } while (gan==3);
-    *a=gan;
-    // printf("\n gan %d:", gan);
+    } while (gan == 3);
+    *a = gan;
 }
 
-void if_nv(nv*infor_nv,bn*infor_bn,vc*infor_vc) // co the thay doi, hien thi
+void if_nv(nv* infor_nv, bn* infor_bn, vc* infor_vc) // co the thay doi, hien thi
 {
     int option;
     do
     {
         printf(" Duoi day la cac options cua ban:\n Option 1 (1): Hien thi thong tin!\n Option 2 (2): Chinh sua thong tin");
         printf("\n******************\n Chon options: ");
-        scanf("%d",&option);
-        switch(option)
+        scanf("%d", &option);
+        switch (option)
         {
             case 1: // Hien thi all thong tin
+                // Your code to display information here
                 break;
             case 2: // thuc hien thao tac chinh sua
+                // Your code to edit information here
                 break;
             default: 
-                printf( " Ban da chon nham option, vui long chon lai!\n *********************\n");
-                option=3;
+                printf(" Ban da chon nham option, vui long chon lai!\n *********************\n");
+                option = 3;
                 break;
         }
-    } while (option==3);
-
-
+    } while (option == 3);
 }
-void if_bn(bn*infor_bn,vc*infor_vc) // chi thuc hien hien thi
+
+void if_bn(bn* infor_bn, vc* infor_vc) // chi thuc hien hien thi
 {
-
+    // Your code to display information here
 }
-
-
-//  điều kiện nếu bệnh nhân, bác sĩ, vaccin có đầu vào không thỏa mãn
-//
-
-//3
